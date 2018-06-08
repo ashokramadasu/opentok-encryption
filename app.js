@@ -51,8 +51,7 @@ app.get('/host', function(req, res) {
   res.render('host.ejs', {
     apiKey: apiKey,
     sessionId: sessionId,
-    token: token,
-    apiSessionId: apiSessionId
+    token: token
   });
 });
 
