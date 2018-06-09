@@ -17,9 +17,8 @@ if (!apiKey || !apiSecret) {
 // Initialize the express app
 var app = express();
 app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 
 // Initialize OpenTok
@@ -40,7 +39,14 @@ app.get('/', function(req, res) {
 
 // callback url route
 app.post('/callback', (req, res) => {
-  console.log(req);
+  console.log('you are in callbackurl --post');
+  console.log(JSON.stringify(req.body, null, 2));
+  res.send(req.body);
+})
+
+app.get('/callback', (req, res) => {
+  console.log('you are in callbackurl');
+  res.send('you are in callbackurl');
 })
 
 app.get('/host', function(req, res) {
@@ -89,6 +95,7 @@ app.get('/download/:archiveId', function(req, res) {
 });
 
 app.post('/start', function(req, res) {
+  console.log(req.body);
   var hasAudio = (req.param('hasAudio') !== undefined);
   var hasVideo = (req.param('hasVideo') !== undefined);
   var outputMode = req.param('outputMode');
