@@ -147,8 +147,8 @@ app.post('/start', function (req, res) {
   // res.json(archive);
   opentok.startArchive(app.get('sessionId'), {
     name: 'Node Opentok Encryption App',
-    hasAudio: hasAudio,
-    hasVideo: hasVideo,
+    hasAudio: true,
+    hasVideo: true,
     outputMode: outputMode
   }, function (err, archive) {
     if (err) return res.send(500,
