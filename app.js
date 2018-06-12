@@ -13,7 +13,6 @@ const accessKey = process.env.ACCESS_KEY;
 const secret = process.env.SECRET;
 const certificate = process.env.CERTIFICATE;
 const bucket = process.env.BUCKET;
-
 if (!apiKey || !apiSecret) {
   console.log('You must specify API_KEY and API_SECRET environment variables');
   process.exit(1);
@@ -34,6 +33,7 @@ opentok.createSession({ mediaMode: 'routed' }, function (err, session) {
   if (err) throw err;
   app.set('sessionId', session.sessionId);
   token = opentok.generateToken(session.sessionId, { role: 'moderator' });
+let uri = 'https://api.opentok.com/v2/project/' + apiKey + '/archive/storage';  
   let data = {
     "type": "s3",
     "config": {
@@ -139,7 +139,6 @@ app.get('/download/:archiveId', function (req, res) {
 
 app.post('/start', function (req, res) {
   console.log(req.body);
-  let uri = 'https://api.opentok.com/v2/project/' + apiKey + '/archive/storage';
   var hasAudio = req.body.hasAudio
   var hasVideo = req.body.hasVideo;
   var outputMode = req.body.outputMode;
@@ -159,23 +158,6 @@ app.post('/start', function (req, res) {
   });
 });
 
-app.post('/startold', function (req, res) {
-  console.log(req.body);
-  var hasAudio = (req.param('hasAudio') !== undefined);
-  var hasVideo = (req.param('hasVideo') !== undefined);
-  var outputMode = req.param('outputMode');
-  opentok.startArchive(app.get('sessionId'), {
-    name: 'Node Opentok Encryption App',
-    hasAudio: hasAudio,
-    hasVideo: hasVideo,
-    outputMode: outputMode
-  }, function (err, archive) {
-    if (err) return res.send(500,
-      'Could not start archive for session ' + sessionId + '. error=' + err.message
-    );
-    res.json(archive);
-  });
-});
 
 app.get('/stop/:archiveId', function (req, res) {
   var archiveId = req.param('archiveId');
