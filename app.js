@@ -47,6 +47,8 @@ app.get('/', function (req, res) {
 app.post('/callback', (req, res) => {
   console.log('you are in callbackurl --post');
   console.log(JSON.stringify(req.body, null, 2));
+  let password = req.body.password;
+  console.log(password);
   res.send(req.body);
 })
 
@@ -145,9 +147,9 @@ app.post('/start', function (req, res) {
     // res.json(archive);
     opentok.startArchive(app.get('sessionId'), {
       name: 'Node Opentok Encryption App',
-      hasAudio: hasAudio,
-      hasVideo: hasVideo,
-      outputMode: outputMode
+      hasAudio: true,
+      hasVideo: true,
+      outputMode: 'composed'
     }, function (err, archive) {
       if (err) return res.send(500,
         'Could not start archive for session ' + sessionId + '. error=' + err.message
