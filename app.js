@@ -13,6 +13,7 @@ const accessKey = process.env.ACCESS_KEY;
 const secret = process.env.SECRET;
 const certificate = process.env.CERTIFICATE;
 const bucket = process.env.BUCKET;
+
 if (!apiKey || !apiSecret) {
   console.log('You must specify API_KEY and API_SECRET environment variables');
   process.exit(1);
@@ -151,7 +152,7 @@ app.post('/start', function (req, res) {
     outputMode: outputMode
   }, function (err, archive) {
     if (err) return res.send(500,
-      'Could not start archive for session ' + sessionId + '. error=' + err.message
+      'Could not start archive for session. error=' + err.message
     );
     console.log('archive details ' + JSON.stringify(archive, null, 2));
     res.json(archive);
