@@ -2,6 +2,7 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     request = require('request'),
+    jwt = require('jsonwebtoken'),
     OpenTok = require('opentok');
 
 // Verify that the API Key and API Secret are defined
